@@ -3,8 +3,9 @@ import requests
 from urllib.parse import urlsplit
 
 
-def download_photos(url, filename):
-    response = requests.get(url)
+def download_photos(url, filename, api_key):
+    payload = {'api_key': api_key}
+    response = requests.get(url, params=payload)
     response.raise_for_status()
     with open(filename, 'wb') as file:
         file.write(response.content)

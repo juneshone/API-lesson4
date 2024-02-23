@@ -23,9 +23,9 @@ def fetch_nasa_epic_photos(nasa_api_key, count):
         epic_image = image_url['image']
         nasa_epic_url = \
             f'https://api.nasa.gov/EPIC/archive/natural/' \
-            f'{formatted_date}/png/{epic_image}.png?api_key={nasa_api_key}'
+            f'{formatted_date}/png/{epic_image}.png'
         filename = f'images/epic_{image_number}{get_extension(nasa_epic_url)}'
-        download_photos(nasa_epic_url, filename)
+        download_photos(nasa_epic_url, filename, nasa_api_key)
 
 
 if __name__ == '__main__':
