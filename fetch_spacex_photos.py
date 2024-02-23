@@ -5,10 +5,7 @@ from download_photos import download_photos
 
 
 def fetch_spacex_last_launch(launch_id):
-    if not launch_id:
-        spacex_api_url = 'https://api.spacexdata.com/v5/launches/latest'
-    else:
-        spacex_api_url = f'https://api.spacexdata.com/v5/launches/{launch_id}'
+    spacex_api_url = f'https://api.spacexdata.com/v5/launches/{launch_id}'
     response = requests.get(spacex_api_url)
     response.raise_for_status()
     spacex_url = response.json()['links']['flickr']['original']
@@ -22,6 +19,6 @@ if __name__ == '__main__':
     parser = argparse.ArgumentParser(
         description='Скачивает фотографии с сайта SpaceX'
     )
-    parser.add_argument("--launch_id", help='идентификатор запуска')
+    parser.add_argument("--launch_id", default='latest', help='идентификатор запуска')
     args = parser.parse_args()
     fetch_spacex_last_launch(args.launch_id)
