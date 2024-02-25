@@ -6,12 +6,12 @@ import time
 from dotenv import load_dotenv
 
 
-def upload_selected_photo(chat_id, filename):
+def upload_selected_photo(chat_id, filename, bot):
     with open(f'images/{filename}', 'rb') as document:
         bot.send_document(chat_id=chat_id, document=document)
 
 
-def upload_random_photo(chat_id, interval):
+def upload_random_photo(chat_id, interval, bot):
     while True:
         for root, dirs, file in os.walk('images/'):
             filename = random.choice(file)
@@ -19,8 +19,7 @@ def upload_random_photo(chat_id, interval):
                 bot.send_document(chat_id=chat_id, document=document)
                 time.sleep(interval)
 
-
-if __name__ == '__main__':
+def main():
     load_dotenv()
     bot = telegram.Bot(token=os.getenv('TELEGRAM_BOT_TOKEN'))
     parser = argparse.ArgumentParser(
@@ -34,9 +33,12 @@ if __name__ == '__main__':
     parser.add_argument("--filename", help='Выбор определенной фотографии')
     args = parser.parse_args()
     if args.filename:
-        upload_selected_photo(args.chat_id, args.filename)
+        upload_selected_photo(args.chat_id, args.filename, bot)
     else:
         interval = int(os.getenv('PUBLICATION_INTERVAL'))
         if not interval:
             interval = args.interval
-        upload_random_photo(args.chat_id, interval)
+        upload_random_photo(args.chat_id, interval, bot)
+
+if __name__ == '__main__':
+    main()
