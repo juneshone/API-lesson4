@@ -18,7 +18,7 @@ def fetch_nasa_apod_photos(nasa_api_key, count):
     for image_number, image_url in enumerate(response.json()):
         nasa_apod_url = image_url['url']
         filename = f'images/apod_{image_number}{get_extension(nasa_apod_url)}'
-        download_photos(nasa_apod_url, filename)
+        download_photos(nasa_apod_url, filename, nasa_api_key)
 
 
 if __name__ == '__main__':
